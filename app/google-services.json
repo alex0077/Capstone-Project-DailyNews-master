@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1081440266652",
+    "firebase_url": "https://capstone-project-dailynews.firebaseio.com",
+    "project_id": "capstone-project-dailynews",
+    "storage_bucket": "capstone-project-dailynews.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081440266652:android:44214cfb1957bda8",
+        "android_client_info": {
+          "package_name": "com.alex.dailynews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081440266652-ufugic242o42e1mfu490iv63npj0rnsb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alex.dailynews",
+            "certificate_hash": "b377fd60062575f3775deb005ee46173e01c1667"
+          }
+        },
+        {
+          "client_id": "1081440266652-69r40b2q15td4hbo34n2bv5h5msi7jni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNfDGTHZOalkiToqbK7CBlbAb1DY7LvZ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081440266652-69r40b2q15td4hbo34n2bv5h5msi7jni.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
