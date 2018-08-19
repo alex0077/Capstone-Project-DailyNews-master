@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Daily News</string>
+    <string name="title_activity_main">Main</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" tools:keep="@string/hello_blank_fragment">No data available.</string>
+
+    <string name="widget_search">Search Daily News…</string>
+    <string name="splash_image">Splash Image</string>
+    <string name="icon_news">Icon Google News</string>
+
+
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+</resources>

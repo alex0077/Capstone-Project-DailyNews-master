@@ -1,0 +1,36 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/cream_background"
+    android:layout_height="match_parent"
+    tools:ignore="Overdraw">
+
+    <RelativeLayout
+        android:layout_gravity="top"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/unreadFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/unread_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:theme="@style/CircularProgress"
+            android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
