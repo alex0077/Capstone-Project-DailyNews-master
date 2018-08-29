@@ -1,17 +1,16 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/cream_background"
     android:layout_height="match_parent"
+    android:background="@color/cream_background"
+    android:fitsSystemWindows="true"
     tools:ignore="Overdraw">
 
-    <RelativeLayout
-        android:layout_gravity="top"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/unreadFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="top">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/unread_recycler_view"

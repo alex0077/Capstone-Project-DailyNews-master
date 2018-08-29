@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/checkboxLayout"
-    android:orientation="horizontal"
-    android:layout_margin="10dp"
     android:layout_width="match_parent"
-    android:layout_height="40dp">
+    android:layout_height="40dp"
+    android:layout_margin="10dp"
+    android:orientation="horizontal">
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -20,11 +20,11 @@
 
     <TextView
         android:id="@+id/source"
-        android:textColor="@color/grey_700"
-        android:layout_gravity="center_vertical"
-        android:textSize="24sp"
-        tools:text="The Verge"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/grey_700"
+        android:textSize="24sp"
+        tools:text="The Verge" />
 
 </LinearLayout>

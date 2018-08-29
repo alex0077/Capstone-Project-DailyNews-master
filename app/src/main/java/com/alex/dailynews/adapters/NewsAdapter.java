@@ -16,21 +16,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.alex.dailynews.R;
+import com.alex.dailynews.data.NewsSQLiteHelper;
+import com.alex.dailynews.model.NewsArticle;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import com.alex.dailynews.R;
-import com.alex.dailynews.data.NewsSQLite;
-import com.alex.dailynews.model.NewsArticle;
-
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
-    private ArrayList<NewsArticle> newsArticleArrayList, newsArticleArrayListCopy;
     private final Context mContext;
-    private NewsSQLite newsSQLite;
     private final int mType;
+    private ArrayList<NewsArticle> newsArticleArrayList, newsArticleArrayListCopy;
+    private NewsSQLiteHelper newsSQLiteHelper;
     private LottieAnimationView animationView;
 
     public NewsAdapter(Context activityContext, int type, ArrayList<NewsArticle> newsArticleList) {
@@ -38,14 +37,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         mContext = activityContext;
         switch (type) {
             case 2:             //TopHeadlines
-                newsSQLite = new NewsSQLite(activityContext);
+                newsSQLiteHelper = new NewsSQLiteHelper(activityContext);
                 this.newsArticleArrayList = newsArticleList;    // Call getAllUnread() here to get only those who haven't been read
 
                 newsArticleArrayListCopy = new ArrayList<>();
                 newsArticleArrayListCopy.addAll(newsArticleArrayList);
                 break;
             case 3:        //Favorite
-                newsSQLite = new NewsSQLite(activityContext);
+                newsSQLiteHelper = new NewsSQLiteHelper(activityContext);
                 this.newsArticleArrayList = newsArticleList;
                 break;
             case 1:
@@ -59,12 +58,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         this.animationView = animationView;
         mContext = activityContext;
         if (type == 2) {            //TopHeadlines
-            newsSQLite = new NewsSQLite(activityContext);
+            newsSQLiteHelper = new NewsSQLiteHelper(activityContext);
             this.newsArticleArrayList = newsArticleList;    // Call getAllUnread() here to get only those who haven't been read
             newsArticleArrayListCopy = new ArrayList<>();
             newsArticleArrayListCopy.addAll(newsArticleArrayList);
         } else if (type == 3) {       //Favorite
-            newsSQLite = new NewsSQLite(activityContext);
+            newsSQLiteHelper = new NewsSQLiteHelper(activityContext);
             this.newsArticleArrayList = newsArticleList;
         }
     }
@@ -115,7 +114,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         final TextView title;
         final TextView description;
         final TextView source;
-final CardView cardView;
+        final CardView cardView;
         final ImageView imageView;
         final ImageView imageButton;
         final RelativeLayout favLayout;
@@ -149,8 +148,8 @@ final CardView cardView;
                 @Override
                 public void onClick(View v) {
                     if (mType == 2) {
-                        ArrayList<NewsArticle> newsList = newsSQLite.getRowByPosition(newsArticleArrayList.size() - getAdapterPosition() - 1);
-                        newsSQLite.addNewFavoriteRow(newsList);
+                        ArrayList<NewsArticle> newsList = newsSQLiteHelper.getRowByPosition(newsArticleArrayList.size() - getAdapterPosition() - 1);
+                        newsSQLiteHelper.addNewFavoriteRow(newsList);
                         animationView.setVisibility(View.VISIBLE);
                         animationView.setAnimation("TwitterHeart.json");
                         animationView.loop(false);
@@ -177,7 +176,7 @@ final CardView cardView;
                             }
                         });
                     } else {
-                        newsSQLite.deleteFavoriteRow(newsArticleArrayList.get(getAdapterPosition()).getTitle());
+                        newsSQLiteHelper.deleteFavoriteRow(newsArticleArrayList.get(getAdapterPosition()).getTitle());
                         newsArticleArrayList.remove(getAdapterPosition());
                         notifyDataSetChanged();
                     }

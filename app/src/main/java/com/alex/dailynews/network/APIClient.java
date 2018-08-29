@@ -2,6 +2,7 @@ package com.alex.dailynews.network;
 
 import com.alex.dailynews.BuildConfig;
 import com.alex.dailynews.model.NewsReply;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

@@ -19,32 +19,31 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.alex.dailynews.R;
+import com.alex.dailynews.adapters.NewsAdapter;
+import com.alex.dailynews.data.NewsSQLiteHelper;
+import com.alex.dailynews.model.NewsArticle;
+import com.alex.dailynews.model.NewsReply;
+import com.alex.dailynews.model.SourcesList;
+import com.alex.dailynews.network.APIClient;
+import com.alex.dailynews.network.RetrofitInstance;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import com.alex.dailynews.R;
-import com.alex.dailynews.adapters.NewsAdapter;
-import com.alex.dailynews.data.NewsSQLite;
-import com.alex.dailynews.model.NewsArticle;
-import com.alex.dailynews.model.NewsReply;
-import com.alex.dailynews.model.SourcesList;
-import com.alex.dailynews.network.APIClient;
-import com.alex.dailynews.network.RetrofitInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class TopHeadlines extends Fragment {
 
     private final String TAG = getClass().getSimpleName();
-
+    private final StringBuilder sourcesString = new StringBuilder();
     private ProgressBar progressBar;
     private ArrayList<SourcesList> sourceArrayList;
     private ArrayList<NewsArticle> newsArticleArrayList = new ArrayList<>();
-    private final StringBuilder sourcesString = new StringBuilder();
-    private NewsSQLite newsSQLite;
+    private NewsSQLiteHelper newsSQLiteHelper;
     private View rootView;
     private RelativeLayout rootLayout;
     private ConnectivityManager connectivityManager;
@@ -55,7 +54,6 @@ public class TopHeadlines extends Fragment {
 
     public TopHeadlines() {
 
-
     }
 
     @Override
@@ -64,7 +62,7 @@ public class TopHeadlines extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_topheadlines, container, false);
             mContext = getActivity();
-            newsSQLite = new NewsSQLite(getActivity());
+            newsSQLiteHelper = new NewsSQLiteHelper(getActivity());
             sourceArrayList = new ArrayList<>();
 
             progressBar = rootView.findViewById(R.id.progressBar);
@@ -79,13 +77,12 @@ public class TopHeadlines extends Fragment {
             activeNetwork = connectivityManager.getActiveNetworkInfo();
             new getSourcesFromDb().execute();
         }
-
         return rootView;
     }
 
     private void gettingNews() {
 
-//        newsSQLite.dropNewsTable();    //Dropping and adding
+//        newsSQLiteHelper.dropNewsTable();    //Dropping and adding
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -99,7 +96,7 @@ public class TopHeadlines extends Fragment {
             public void onResponse(@NonNull Call<NewsReply> call, @NonNull retrofit2.Response<NewsReply> response) {
 
                 NewsReply newsReply = response.body();
-                newsSQLite.addAllNews(Objects.requireNonNull(newsReply).getNewsArticleList());
+                newsSQLiteHelper.addAllNews(Objects.requireNonNull(newsReply).getNewsArticleList());
                 progressBar.setVisibility(View.GONE);
                 new getNewsFromDb().execute();
             }
@@ -123,7 +120,7 @@ public class TopHeadlines extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-            newsArticleArrayList = newsSQLite.getAllRows();
+            newsArticleArrayList = newsSQLiteHelper.getAllRows();
             return null;
         }
 
@@ -152,7 +149,7 @@ public class TopHeadlines extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            sourceArrayList = newsSQLite.getAllSources();
+            sourceArrayList = newsSQLiteHelper.getAllSources();
             for (int i = 0; i < sourceArrayList.size(); i++) {
                 sourcesString.append(sourceArrayList.get(i).getSource());
                 sourcesString.append(",");
@@ -167,9 +164,9 @@ public class TopHeadlines extends Fragment {
 
             progressBar.setVisibility(View.GONE);
 
-            if (newsSQLite.getRowCount() == 0 && activeNetwork == null) {
-                Snackbar snackbar = Snackbar.make(rootLayout, "You are disconnected!", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("RETRY", new View.OnClickListener() {
+            if (newsSQLiteHelper.getRowCount() == 0 && activeNetwork == null) {
+                Snackbar snackbar = Snackbar.make(rootLayout, R.string.snackbar_disconnected, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.snackbar_retry, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if (connectivityManager.getActiveNetworkInfo() != null) {
@@ -178,8 +175,8 @@ public class TopHeadlines extends Fragment {
                             }
                         });
                 snackbar.show();
-            } else if (newsSQLite.getRowCount() != 0 && connectivityManager.getActiveNetworkInfo() == null) {
-                Toasty.error(mContext, "You are disconnected!", Toast.LENGTH_SHORT).show();
+            } else if (newsSQLiteHelper.getRowCount() != 0 && connectivityManager.getActiveNetworkInfo() == null) {
+                Toasty.error(mContext, getResources().getString(R.string.toast_disconnected), Toast.LENGTH_SHORT, true).show();
                 new getNewsFromDb().execute();
             } else if (activeNetwork != null) {
                 Log.d("TAG", "Before call getting news");

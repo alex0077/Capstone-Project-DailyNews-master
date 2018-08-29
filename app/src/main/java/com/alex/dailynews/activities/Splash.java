@@ -8,19 +8,17 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.alex.dailynews.R;
-import com.alex.dailynews.data.NewsSQLite;
+import com.alex.dailynews.data.NewsSQLiteHelper;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Splash extends AppCompatActivity {
 
-    private NewsSQLite newsSQLite;
+    private NewsSQLiteHelper newsSQLiteHelper;
 
-    public static Intent createLaunchActivityIntent(Context context)
-    {
+    public static Intent createLaunchActivityIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("key", 877); //Optional parameters
-        context.startActivity(intent);
         return intent;
     }
 
@@ -29,7 +27,7 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        newsSQLite = new NewsSQLite(this);
+        newsSQLiteHelper = new NewsSQLiteHelper(this);
         final SharedPreferences getPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
         final boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
@@ -42,7 +40,7 @@ public class Splash extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } finally {
-                        new NewsSQLite(Splash.this).dropAllTables();
+                        new NewsSQLiteHelper(Splash.this).dropAllTables();
                         //  Make a new preferences editor
                         SharedPreferences.Editor e = getPrefs.edit();
 
@@ -52,13 +50,13 @@ public class Splash extends AppCompatActivity {
                         //  Apply changes
                         e.apply();
 
-                        newsSQLite.addSource("the-new-york-times");
-                        newsSQLite.addSource("time");
-                        newsSQLite.addSource("cbs-news");
-                        newsSQLite.addSource("cnn");
-                        newsSQLite.addSource("national-geographic");
-                        newsSQLite.addSource("mtv-news");
-                        newsSQLite.addSource("google-news");
+                        newsSQLiteHelper.addSource("the-new-york-times");
+                        newsSQLiteHelper.addSource("time");
+                        newsSQLiteHelper.addSource("cbs-news");
+                        newsSQLiteHelper.addSource("cnn");
+                        newsSQLiteHelper.addSource("national-geographic");
+                        newsSQLiteHelper.addSource("mtv-news");
+                        newsSQLiteHelper.addSource("google-news");
 
                         final Intent intent = new Intent(Splash.this, MainActivity.class);
                         startActivity(intent);

@@ -16,17 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
-import es.dmoral.toasty.Toasty;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import com.alex.dailynews.R;
 import com.alex.dailynews.adapters.NewsAdapter;
 import com.alex.dailynews.model.NewsArticle;
 import com.alex.dailynews.model.NewsReply;
 import com.alex.dailynews.network.APIClient;
 import com.alex.dailynews.network.RetrofitInstance;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +51,7 @@ public class SearchNews extends AppCompatActivity {
         actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
 
-        recyclerView =  findViewById(R.id.search_recycler_view);
+        recyclerView = findViewById(R.id.search_recycler_view);
         noMessagesLayout = findViewById(R.id.no_messages_error_layout);
         progressBar = findViewById(R.id.search_progress_bar);
         searchList = new ArrayList<>();
@@ -70,10 +71,9 @@ public class SearchNews extends AppCompatActivity {
         String WidgetQuery = getIntent().getStringExtra(MainActivity.widgetSearchString);
         if (!Objects.equals(WidgetQuery, "")) {
             query = WidgetQuery;
-            actionBar.setTitle("Search Everything on Daily News");
+            actionBar.setTitle(R.string.search_everything);
         }
-        if (Intent.ACTION_SEARCH.equals(intent.getAction()))
-        {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             WidgetQuery = "";
             query = intent.getStringExtra(SearchManager.QUERY);
             actionBar.setTitle(query);
@@ -89,12 +89,11 @@ public class SearchNews extends AppCompatActivity {
                     searchList = new ArrayList<>();
                     NewsReply newsReply = response.body();
                     searchList.addAll(Objects.requireNonNull(newsReply).getNewsArticleList());
-                    Log.d(TAG,searchList.toString());
-                    if(searchList == null || searchList.size() == 0){
+                    Log.d(TAG, searchList.toString());
+                    if (searchList == null || searchList.size() == 0) {
                         progressBar.setVisibility(View.GONE);
                         noMessagesLayout.setVisibility(View.VISIBLE);
-                    }
-                    else{
+                    } else {
                         noMessagesLayout.setVisibility(View.GONE);
                         newsAdapter = new NewsAdapter(SearchNews.this, 1, searchList);
                         recyclerView.setAdapter(new ScaleInAnimationAdapter(newsAdapter));
@@ -105,7 +104,7 @@ public class SearchNews extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<NewsReply> call, Throwable t) {
-                    Log.d("failure", t.toString()+"");
+                    Log.d("failure", t.toString() + "");
                 }
             });
         }
@@ -124,8 +123,7 @@ public class SearchNews extends AppCompatActivity {
                 onBackPressed();
                 return true;
             default:
-                if (Intent.ACTION_SEARCH.trim().equals(""))
-                {
+                if (Intent.ACTION_SEARCH.trim().equals("")) {
                     Toasty.info(this, "Please type your keyword to search.", Toast.LENGTH_LONG).show();
                 }
                 return super.onOptionsItemSelected(item);

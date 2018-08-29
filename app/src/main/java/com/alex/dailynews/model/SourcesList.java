@@ -10,6 +10,9 @@ public class SourcesList {
         this.isSelected = isSelected;
     }
 
+    public SourcesList() {
+    }
+
     public String getSource() {
         return source;
     }
@@ -24,8 +27,5 @@ public class SourcesList {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
-    }
-
-    public SourcesList() {
     }
 }

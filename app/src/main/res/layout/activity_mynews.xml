@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="com.alex.dailynews.activities.MyNews">
+
+    <TextView
+        android:id="@+id/insert_news_titleLabel"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nextFocusDown="@+id/insert_website_nameLabel"
+        android:nextFocusUp="@+id/insert_news_titleLabel"
+        android:padding="20dp"
+        android:text="@string/insert_news_title"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/insert_website_nameLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_300"
+        android:nextFocusDown="@+id/editName"
+        android:nextFocusUp="@+id/insert_news_titleLabel"
+        android:text="@string/insert_website_name"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/insert_website_hint"
+        android:nextFocusDown="@+id/insert_website_urlLabel"
+        android:nextFocusUp="@+id/insert_news_titleLabel" />
+
+    <TextView
+        android:id="@+id/insert_website_urlLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_300"
+        android:nextFocusDown="@+id/editUrl"
+        android:nextFocusUp="@+id/insert_news_titleLabel"
+        android:text="@string/insert_website_url"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/insert_website_url_hint"
+        android:nextFocusDown="@+id/btn_insert"
+        android:nextFocusUp="@+id/insert_news_titleLabel" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_insert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:nextFocusUp="@+id/insert_news_titleLabel"
+            android:text="@string/insert_button" />
+        <!--   <Button
+               android:id="@+id/btn_show"
+               android:text="Show"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_gravity="bottom|center" />-->
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -27,24 +27,23 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
-import es.dmoral.toasty.Toasty;
 import com.alex.dailynews.R;
 import com.alex.dailynews.adapters.CustomPagerAdapter;
 import com.alex.dailynews.network.ScheduleServiceHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
-    private AdView mAdView;
     public static String widgetSearchString = "q";
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +60,12 @@ public class MainActivity extends AppCompatActivity
         mAdView.loadAd(adRequest);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            createSearch();
+        if (extras != null && extras.getInt("key") == 877) {
+            CallCreateSearch();
         }
+      /* else if (extras != null && extras.getInt("key") == 777) {
+            CallShowMyNews();
+        }*/
 
         LottieAnimationView animationView = findViewById(R.id.animation_view);
         NavigationView navigationView1 = findViewById(R.id.nav_view);
@@ -88,8 +90,9 @@ public class MainActivity extends AppCompatActivity
         //Adding Tabs
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Articles"));
-        tabLayout.addTab(tabLayout.newTab().setText("Favorites"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_articles));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_my_news_websites));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_favorites));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //Setting ViewPager
@@ -134,7 +137,7 @@ public class MainActivity extends AppCompatActivity
 
         if (getIntent().getExtras() != null) {
             if (getIntent().getBooleanExtra("isFirstTime", false)) {
-                Toasty.info(this, "Click the floating button to select your own News SourcesList", Toast.LENGTH_LONG).show();
+                Toasty.info(MainActivity.this, getResources().getString(R.string.toast_info_click_floating_button), Toast.LENGTH_LONG, true).show();
             }
         }
 
@@ -180,18 +183,28 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if (newText.trim().equals(""))
-        {
-            Toasty.info(this, "Please type the keyword to search.", Toast.LENGTH_LONG).show();
+        if (newText.trim().equals("")) {
+            Toasty.info(MainActivity.this, getResources().getString(R.string.toast_info_search_keyword), Toast.LENGTH_LONG, true).show();
         }
         return false;
     }
 
-   private void createSearch() {
-       Intent intent = new Intent(this, SearchNews.class);
-       intent.putExtra(widgetSearchString, widgetSearchString);
-       startActivity(intent);
-   }
+    private void CallCreateSearch() {
+        Intent intent = new Intent(this, SearchNews.class);
+        intent.putExtra(widgetSearchString, widgetSearchString);
+        startActivity(intent);
+    }
+
+  /*  private ShowMyNews CallShowMyNews() {
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        ViewPager  viewPager = (ViewPager) this.findViewById(R.id.viewPagerActivity);
+        final CustomPagerAdapter pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        if (viewPager.getAdapter() != null)
+            viewPager.setAdapter(null);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(2);
+        return new ShowMyNews();
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -209,6 +222,9 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_sources:
                 startActivity(new Intent(MainActivity.this, FilterSources.class));
+                break;
+            case R.id.nav_mynews:
+                startActivity(new Intent(MainActivity.this, MyNews.class));
                 break;
             case R.id.nav_about:
                 startActivity(new Intent(MainActivity.this, About.class));

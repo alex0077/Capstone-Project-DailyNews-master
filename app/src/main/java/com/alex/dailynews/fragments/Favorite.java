@@ -12,17 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alex.dailynews.R;
+import com.alex.dailynews.adapters.NewsAdapter;
+import com.alex.dailynews.data.NewsSQLiteHelper;
+import com.alex.dailynews.model.NewsArticle;
+
 import java.util.ArrayList;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import com.alex.dailynews.R;
-import com.alex.dailynews.adapters.NewsAdapter;
-import com.alex.dailynews.data.NewsSQLite;
-import com.alex.dailynews.model.NewsArticle;
 
 public class Favorite extends Fragment {
 
-    private NewsSQLite newsSQLite;
+    private NewsSQLiteHelper newsSQLiteHelper;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     //TextView emptyState;
@@ -33,16 +34,16 @@ public class Favorite extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-        newsSQLite = new NewsSQLite(getActivity());
+        newsSQLiteHelper = new NewsSQLiteHelper(getActivity());
         recyclerView = rootView.findViewById(R.id.favorite_recycler_view);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeRefresh);
         TextView emptyState = rootView.findViewById(R.id.emptyText);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         favoriteArrayList = new ArrayList<>();
 
         new getNewsFromDb().execute();
@@ -55,19 +56,7 @@ public class Favorite extends Fragment {
             }
         });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         return rootView;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            // Refresh Fragment
-            swipeRefreshLayout.setRefreshing(true);
-            new getNewsFromDb().execute();
-        }
     }
 
     @Override
@@ -75,8 +64,8 @@ public class Favorite extends Fragment {
         super.onResume();
         // Call the data setup methods again, to reflect
         // the changes which took place then the Fragment was paused
-                swipeRefreshLayout.setRefreshing(true);
-                new getNewsFromDb().execute();
+        swipeRefreshLayout.setRefreshing(true);
+        new getNewsFromDb().execute();
     }
 
     class getNewsFromDb extends AsyncTask<Void, Void, Void> {
@@ -89,7 +78,7 @@ public class Favorite extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-            favoriteArrayList = newsSQLite.getFavoriteRows();
+            favoriteArrayList = newsSQLiteHelper.getFavoriteRows();
 
             return null;
         }

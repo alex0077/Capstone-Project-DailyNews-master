@@ -21,33 +21,33 @@
             android:id="@+id/article_image"
             android:layout_width="match_parent"
             android:layout_height="240dp"
+            android:contentDescription="@string/article_image"
             android:scaleType="center"
-            android:src="@drawable/ic_icons8_google_news"
-            android:contentDescription="@string/icon_news" />
+            android:src="@drawable/ic_icons8_google_news" />
 
         <TextView
-            android:layout_marginTop="4dp"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
             android:id="@+id/article_title"
             fontPath="fonts/Roboto-Black.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/article_image"
             android:layout_gravity="top"
+            android:layout_marginTop="4dp"
             android:maxLines="3"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
             android:textSize="16sp"
             tools:text="Electronic Entertainment: Which Types of Entertainment Platforms Rock Today" />
 
         <TextView
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
             android:id="@+id/article_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/article_title"
             android:layout_marginTop="8dp"
             android:maxLines="6"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
             android:textSize="16sp"
             tools:text="Facebook has had some bumpy years. Critics, especially Rupert Murdoch and his News Corp CEO Robert Thomson, have no intention of letting the crisis go to waste." />
 
@@ -60,14 +60,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
                 android:id="@+id/article_source"
                 fontPath="fonts/Roboto-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/rectangle"
                 android:maxLines="1"
                 android:padding="4.5dp"
@@ -77,22 +77,22 @@
                 tools:text="Wired" />
 
             <ImageButton
-                android:contentDescription="favouriteButton"
                 android:id="@+id/favorite_button"
                 style="?android:attr/actionButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:contentDescription="@string/favorites_button"
                 android:minWidth="48dp"
                 tools:ignore="HardcodedText" />
 
         </RelativeLayout>
 
         <View
-            android:layout_below="@id/fav_button_layout"
-            android:background="@color/grey_100"
             android:layout_width="match_parent"
-            android:layout_height="1dp"/>
+            android:layout_height="1dp"
+            android:layout_below="@id/fav_button_layout"
+            android:background="@color/grey_100" />
 
     </RelativeLayout>
 

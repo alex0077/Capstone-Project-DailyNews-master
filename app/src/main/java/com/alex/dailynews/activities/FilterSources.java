@@ -10,27 +10,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.alex.dailynews.R;
 import com.alex.dailynews.adapters.SourcesAdapter;
-import com.alex.dailynews.data.NewsSQLite;
+import com.alex.dailynews.data.NewsSQLiteHelper;
 import com.alex.dailynews.model.SourcesList;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class FilterSources extends AppCompatActivity {
 
     private SourcesAdapter sourcesAdapter;
-    private NewsSQLite newsSQLite;
+    private NewsSQLiteHelper newsSQLiteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_sources);
-        setTitle("Select SourcesList");
-        newsSQLite = new NewsSQLite(this);
+        setTitle(R.string.select_sources);
+        newsSQLiteHelper = new NewsSQLiteHelper(this);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -84,12 +84,12 @@ public class FilterSources extends AppCompatActivity {
         ArrayList<SourcesList> sources = sourcesAdapter.getSelectedList();
         int count = sourcesAdapter.getSelectedSize();
         if (count != 0) {
-            newsSQLite.dropSourcesTable();
-            newsSQLite.dropNewsTable();
+            newsSQLiteHelper.dropSourcesTable();
+            newsSQLiteHelper.dropNewsTable();
         }
         for (int i = 0; i < sources.size(); i++) {
-            Log.v("selectedlist", sources.get(i).getSource());
-            newsSQLite.addSource(sources.get(i).getSource());
+            Log.v("selected list", sources.get(i).getSource());
+            newsSQLiteHelper.addSource(sources.get(i).getSource());
         }
         startActivity(new Intent(this, MainActivity.class));
         finish();

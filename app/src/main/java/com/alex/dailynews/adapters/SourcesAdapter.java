@@ -11,11 +11,11 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
 import com.alex.dailynews.R;
 import com.alex.dailynews.model.SourcesList;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.ViewHolder> {
 
@@ -34,7 +34,7 @@ public class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.source_list_item,parent,false);
+        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.source_list_item, parent, false);
         return new ViewHolder(rootView);
     }
 
@@ -58,11 +58,47 @@ public class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        if(sourceList == null){
+        if (sourceList == null) {
             return 0;
         } else {
             return sourceList.size();
         }
+    }
+
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public ArrayList<SourcesList> getSelectedList() {
+        for (int i = 0; i < sourceList.size(); i++) {
+            if (sourceList.get(i).isSelected()) {
+                selectedList.add(sourceList.get(i));
+            }
+        }
+        return selectedList;
+    }
+
+    public int getSelectedSize() {
+        return selectedList.size();
+    }
+
+    public void filter(String searchText) {
+        searchText = searchText.toLowerCase(Locale.getDefault());
+
+        sourceList.clear();
+        if (searchText.length() == 0) {
+            sourceList.addAll(sourceListCopy);
+        } else {
+
+            for (int i = 0; i < sourceListCopy.size(); i++) {
+
+                if (sourceListCopy.get(i).getSource().toLowerCase(Locale.getDefault()).contains(searchText)) {
+                    sourceList.add(sourceListCopy.get(i));
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -77,48 +113,6 @@ public class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.ViewHold
             checkboxLayout = itemView.findViewById(R.id.checkboxLayout);
         }
 
-    }
-
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
-    public ArrayList<SourcesList> getSelectedList() {
-        for(int i=0;i<sourceList.size();i++){
-            if(sourceList.get(i).isSelected()){
-                selectedList.add(sourceList.get(i));
-            }
-        }
-        return selectedList;
-    }
-
-    public int getSelectedSize(){
-        return selectedList.size();
-    }
-
-    public void filter(String searchText)
-    {
-        searchText = searchText.toLowerCase(Locale.getDefault());
-
-        sourceList.clear();
-        if (searchText.length() == 0)
-        {
-            sourceList.addAll(sourceListCopy);
-        }
-        else
-        {
-
-            for (int i = 0; i < sourceListCopy.size(); i++)
-            {
-
-                if (sourceListCopy.get(i).getSource().toLowerCase(Locale.getDefault()).contains(searchText))
-                {
-                    sourceList.add(sourceListCopy.get(i));
-                }
-            }
-        }
-
-        notifyDataSetChanged();
     }
 
 }

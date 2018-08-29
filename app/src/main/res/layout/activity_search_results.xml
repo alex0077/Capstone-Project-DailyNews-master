@@ -22,24 +22,24 @@
         android:visibility="gone">
 
         <TextView
-            android:textColor="@color/grey_500"
-            android:textStyle="italic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No results found\nTry a new search ?"
+            android:text="@string/text_no_results"
             android:textAlignment="center"
+            android:textColor="@color/grey_500"
             android:textSize="14sp"
+            android:textStyle="italic"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/search_progress_bar"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:theme="@style/CircularProgress"/>
+        android:layout_centerInParent="true"
+        android:theme="@style/CircularProgress"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

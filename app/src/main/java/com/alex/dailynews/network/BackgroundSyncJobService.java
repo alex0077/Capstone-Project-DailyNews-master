@@ -1,11 +1,13 @@
 package com.alex.dailynews.network;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.alex.dailynews.data.NewsSQLiteHelper;
+import com.alex.dailynews.model.NewsArticle;
+import com.alex.dailynews.model.NewsReply;
 import com.alex.dailynews.model.SourcesList;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
@@ -13,41 +15,38 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
-import com.alex.dailynews.data.NewsSQLite;
-import com.alex.dailynews.model.NewsArticle;
-import com.alex.dailynews.model.NewsReply;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 
 
 public class BackgroundSyncJobService extends JobService {
-    private NewsSQLite newsSQLite;
-    private ArrayList<SourcesList> sourceArrayList;
-    private ArrayList<NewsArticle> newsArticleArrayList = new ArrayList<>();
-    private final StringBuilder sourcesString = new StringBuilder();
-    private AsyncTask mGetSourcesTask;
     private static final String PRIMARY_CHANNEL = "default";
     private static final String SOURCES = "sources";
     private static final String COUNTS = "counts";
+    private final StringBuilder sourcesString = new StringBuilder();
+    private NewsSQLiteHelper newsSQLiteHelper;
+    private ArrayList<SourcesList> sourceArrayList;
+    private ArrayList<NewsArticle> newsArticleArrayList = new ArrayList<>();
+    private AsyncTask mGetSourcesTask;
     private FirebaseAnalytics mFirebaseAnalytics;
     private Bundle bundle;
+
     @Override
     public boolean onStartJob(JobParameters job) {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        newsSQLite = new NewsSQLite(this);
+        newsSQLiteHelper = new NewsSQLiteHelper(this);
         mGetSourcesTask = new AsyncTask() {
 
             @Override
             protected Object doInBackground(Object[] objects) {
                 sourceArrayList = new ArrayList<>();
-                sourceArrayList = newsSQLite.getAllSources();
+                sourceArrayList = newsSQLiteHelper.getAllSources();
                 for (int i = 0; i < sourceArrayList.size(); i++) {
                     sourcesString.append(sourceArrayList.get(i).getSource());
                     sourcesString.append(",");
                 }
                 bundle = new Bundle();
-                bundle.putString("sources_string",sourcesString.toString());
+                bundle.putString("sources_string", sourcesString.toString());
                 mFirebaseAnalytics.logEvent(SOURCES, bundle);
                 return null;
             }
@@ -81,8 +80,8 @@ public class BackgroundSyncJobService extends JobService {
 
                 NewsReply newsReply = response.body();
                 if (newsReply != null) {
-                    int previousCount = newsSQLite.getNewsCount();
-                    newsSQLite.addAllNews(newsReply.getNewsArticleList());
+                    int previousCount = newsSQLiteHelper.getNewsCount();
+                    newsSQLiteHelper.addAllNews(newsReply.getNewsArticleList());
                     getUnread(previousCount);
                 }
             }
@@ -95,22 +94,21 @@ public class BackgroundSyncJobService extends JobService {
 
     }
 
-    @SuppressLint("StaticFieldLeak")
     private void getUnread(final int previousCount) {
-        int currentCount = newsSQLite.getNewsCount();
+        int currentCount = newsSQLiteHelper.getNewsCount();
         final int difference = currentCount - previousCount;
         bundle = new Bundle();
         bundle.putString("currentCount", String.valueOf(currentCount));
         bundle.putString("previousCount", String.valueOf(previousCount));
         bundle.putString("difference", String.valueOf(difference));
-        mFirebaseAnalytics.logEvent(COUNTS,bundle);
+        mFirebaseAnalytics.logEvent(COUNTS, bundle);
         if (difference > 0) {
             AsyncTask mGetTopNewsTask = new AsyncTask() {
 
                 @Override
                 protected Object doInBackground(Object[] objects) {
                     newsArticleArrayList = new ArrayList<>();
-                    newsArticleArrayList = newsSQLite.getTopNRows(difference);
+                    newsArticleArrayList = newsSQLiteHelper.getTopNRows(difference);
                     return null;
                 }
 

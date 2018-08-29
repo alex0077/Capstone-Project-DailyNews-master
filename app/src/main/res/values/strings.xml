@@ -5,14 +5,92 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" tools:keep="@string/hello_blank_fragment">No data available.</string>
 
-    <string name="widget_search">Search Daily News…</string>
-    <string name="splash_image">Splash Image</string>
     <string name="icon_news">Icon Google News</string>
+    <string name="floating_action_button">Button to filter news sources</string>
+    <string name="widget_empty_list">Nothing in the list</string>
+    <string name="widget_title">Daily News</string>
+
+    //MAIN ACTIVITY
+    //TabLayout
+    <string name="tab_title_articles">Articles</string>
+    <string name="tab_title_favorites">Favorites</string>
+    <string name="tab_title_my_news_websites">My News Websites</string>
+
+    //Toast
+    <string name="toast_info_click_floating_button">Click the floating button to select your own News Sources List.</string>
+    <string name="toast_info_search_keyword">Please type the keyword to search.</string>
+
+
+    //Activity Home Drawer menu
+    <string name="filter_sources">Filter Sources</string>
+    <string name="insert_my_news">Insert my News Websites</string>
+    <string name="about">About</string>
+
+    //Filter Action bar
+    <string name="save">SAVE</string>
+
+    //Widget Search
+    <string name="widget_search">Search Daily News…</string>
+
+    //Splash
+    <string name="splash_title">Daily News</string>
+    <string name="splash_image">Splash Image</string>
+
+    //About
+    <string name="about_app">About Daily News App</string>
+    <string name="newsappi_url">https://newsapi.org/</string>
+    <string name="autor">Made by Alexandre Azevedo</string>
+    <string name="provided_by">API provided by newsapi.org</string>
+
+    //FilterSources
+    <string name="select_sources">Select Sources List</string>
+
+    //Favorites
+    <string name="swipe_down">Swipe down to refresh</string>
+    <string name="no_favorites_text">You don\'t have any favorite news yet!</string>
+
+    //News Item
+    <string name="article_image">Article Image</string>
+    <string name="favorites_button">Add article to favorite news</string>
+
+    //TopHeadlines
+    <string name="snackbar_disconnected">You are disconnected!</string>
+    <string name="snackbar_retry">RETRY</string>
+    <string name="toast_disconnected">You are disconnected!</string>
+
+
+    //Insert My News Websites
+    <string name="insert_news_title">Insert Your News Websites</string>
+    <string name="insert_website_name">Name</string>
+    <string name="insert_website_hint">My Website Name</string>
+    <string name="insert_website_url">URL</string>
+    <string name="insert_website_url_hint">My Website URL</string>
+    <string name="insert_button">Insert</string>
+    <string name="toast_data_inserted">Data Inserted Correctly!</string>
+
+    //Show My News Websites
+    <string name="delete_button">Delete All</string>
+    <string name="show_website_name">Name</string>
+    <string name="show_website_url">URL</string>
+
+    //ShowMyNews
+    <string name="toast_data_deleted">Data Deleted Correctly!</string>
+
+    //Search Results
+    <string name="text_no_results">No results found\nTry a new search ?</string>
+
+    //SearchNews
+    <string name="search_everything">Search Everything on Daily News</string>
 
 
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="shared_pref_name">com.alex.dailynews</string>
+    <string name="no_data_text">No data available</string>
+    <string name="no_internet_connection_text_view_text">No network connection\nRestore connection and restart</string>
 
 </resources>

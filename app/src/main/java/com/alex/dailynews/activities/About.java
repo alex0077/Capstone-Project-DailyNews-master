@@ -2,7 +2,6 @@ package com.alex.dailynews.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alex.dailynews.R;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class About extends AppCompatActivity {
@@ -19,7 +19,7 @@ public class About extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        setTitle("About Me");
+        setTitle(R.string.about_app);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -31,7 +31,7 @@ public class About extends AppCompatActivity {
         newsAPiLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newsAPI = new Intent(Intent.ACTION_VIEW, Uri.parse("https://newsapi.org/"));
+                Intent newsAPI = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.newsappi_url)));
                 startActivity(newsAPI);
             }
         });
